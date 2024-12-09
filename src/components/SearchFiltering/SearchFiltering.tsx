@@ -1,3 +1,6 @@
+import { GrFormNext, GrFormPrevious } from "react-icons/gr";
+import Card from "./Card";
+
 export default function SearchFiltering() {
     return (
         <div className="max-w-7xl mx-auto py-20 space-y-10">
@@ -8,7 +11,7 @@ export default function SearchFiltering() {
             </div>
 
             {/* search filter and card */}
-            <div className="flex gap-8">
+            <div className="flex gap-10">
                 {/* search and filter */}
                 <div className="w-[25%] h-96 ">
                     <h3 className="font-bold text-lg mb-4">Filters Option</h3>
@@ -32,11 +35,40 @@ export default function SearchFiltering() {
                             <option>Han Solo</option>
                             <option>Greedo</option>
                         </select>
+
+                        <select className="select select-bordered w-full max-w-xs">
+                            <option disabled selected>Who shot first?</option>
+                            <option>Han Solo</option>
+                            <option>Greedo</option>
+                        </select>
+
+                        <select className="select select-bordered w-full max-w-xs">
+                            <option disabled selected>Who shot first?</option>
+                            <option>Han Solo</option>
+                            <option>Greedo</option>
+                        </select>
+
+                        <select className="select select-bordered w-full max-w-xs">
+                            <option disabled selected>Who shot first?</option>
+                            <option>Han Solo</option>
+                            <option>Greedo</option>
+                        </select>
                     </div>
                 </div>
                 <div className="w-[75%] h-96">
-                    <h3 className="font-bold text-lg">Items</h3>
-
+                    <div className="flex items-center justify-between mb-4">
+                        <h3 className="font-bold text-lg">Items</h3>
+                        <div>
+                            <button><GrFormPrevious /></button>
+                            <button><GrFormNext /></button>
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-x-6 gap-y-11">
+                        <Card />
+                        <Card />
+                        <Card />
+                        <Card />
+                    </div>
                 </div>
             </div>
 
