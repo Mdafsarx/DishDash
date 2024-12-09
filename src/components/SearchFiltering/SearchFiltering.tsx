@@ -3,9 +3,9 @@ import Card from "./Card";
 
 export default function SearchFiltering() {
     return (
-        <div className="max-w-7xl mx-auto py-20 space-y-10">
+        <div className="max-w-7xl mx-auto py-20">
             {/* title */}
-            <div className="text-center">
+            <div className="text-center mb-10">
                 <h1 className="text-3xl font-bold">Discover Delicious Recipes</h1>
                 <p>Plan your meals, find recipes, cook with ease, and enjoy healthy living every <br /> day with personalized recommendations and smart meal planning tools.</p>
             </div>
@@ -56,19 +56,22 @@ export default function SearchFiltering() {
                     </div>
                 </div>
                 <div className="w-[75%] h-96">
-                    <div className="flex items-center justify-between mb-4">
-                        <h3 className="font-bold text-lg">Items</h3>
-                        <div>
-                            <button><GrFormPrevious /></button>
-                            <button><GrFormNext /></button>
-                        </div>
-                    </div>
+                    <h3 className="font-bold text-lg mb-4">Items</h3>
                     <div className="grid grid-cols-2 gap-x-6 gap-y-11">
                         <Card />
                         <Card />
                         <Card />
                         <Card />
                     </div>
+                </div>
+
+            </div>
+
+            {/* pagination */}
+            <div className="flex justify-end">
+                <div className="space-x-4">
+                    <button className="bg-[#00A14966] border-[#00A149] border-2 rounded-full p-2"><GrFormPrevious className="text-xl text-[#00A149]"/></button>
+                    <button className="bg-[#00A14966] border-[#00A149] border-2 rounded-full p-2"><GrFormNext className="text-xl text-[#00A149]"/></button>
                 </div>
             </div>
 

@@ -1,9 +1,10 @@
+import Link from "next/link";
 import { IoMdTime } from "react-icons/io";
 import { MdDone } from "react-icons/md";
 
 export default function Card() {
     return (
-        <div className="flex items-center gap-5">
+        <Link href={`/details/${'1'}`} className="flex items-center gap-5">
 
             <img src="https://res.cloudinary.com/dz1fy2tof/image/upload/v1733655960/brooke-lark-nTZOILVZuOg-unsplash_urjjyk.jpg" className="w-44 h-32 object-fill rounded-2xl" alt="" />
 
@@ -21,6 +22,6 @@ export default function Card() {
                 </div>
             </div>
 
-        </div>
+        </Link>
     )
 }
