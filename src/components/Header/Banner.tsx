@@ -7,7 +7,7 @@ export default function Banner() {
     <div className="max-w-[95%] mx-auto rounded-2xl bg-[url('https://res.cloudinary.com/dz1fy2tof/image/upload/v1733655960/brooke-lark-nTZOILVZuOg-unsplash_urjjyk.jpg')] bg-cover bg-no-repeat object-fill min-h-[calc(100vh-100px)] flex items-center justify-center">
       {/* content */}
       <div className='flex items-center justify-center rounded-2xl bg-gradient-to-tl from-[#000000CC] to-[#00000099]  min-h-[calc(100vh-100px)] w-full'>
-        <div className='text-center space-y-4 bg-[#00000099 p-10 rounded-2xl'>
+        <div className='text-center space-y-4 p-10'>
           <h3 className='text-2xl font-medium text-[#00A149]'>
             <Typewriter
               words={['Delicious Recipes', 'Healthy Meals', 'Quick Snacks', 'Tasty Desserts', 'Fresh Ingredients', 'Flavorful Dishes']}
