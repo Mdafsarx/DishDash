@@ -1,10 +1,13 @@
+'use client'
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { GiMeal } from "react-icons/gi";
 
 
 export default function Navbar() {
+  const navLink= usePathname()
   return (
-    <div className="flex justify-between items-center h-20 max-w-[95%] mx-auto">
+    <div className={`flex justify-between items-center h-20 max-w-[95%] mx-auto ${navLink !== '/' && 'border-'}`}>
       {/* name and link */}
       <div className="flex items-center gap-9">
         <div>
