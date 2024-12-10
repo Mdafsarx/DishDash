@@ -51,7 +51,7 @@ export default function Navbar() {
           <ul className="flex items-center gap-x-5 *:">
             <Link href={'/'}>Home</Link>
             <Link href={'/'}>Planner</Link>
-            <Link href={'/'}>Favorites</Link>
+            <Link href={'/favorites'}>Favorites</Link>
             <Link href={'/'}>Contact-us</Link>
           </ul>
         </div>

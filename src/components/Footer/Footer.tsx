@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Footer() {
     return (
-        <footer className="footer footer-center bg-primary text-primary-content p-10">
+        <footer className="footer footer-center bg-[#000000] text-primary-content p-10">
             <aside>
                 <svg
                     width="50"
