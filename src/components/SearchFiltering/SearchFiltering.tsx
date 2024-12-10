@@ -1,7 +1,28 @@
+'use client'
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 import Card from "./Card";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { useState } from "react";
 
 export default function SearchFiltering() {
+
+    const [dataShow, setDataShow] = useState(1)
+    const { data } = useQuery({
+        queryKey: ['data'],
+        queryFn: async () => {
+            const res = await axios(`https://api.spoonacular.com/recipes/findByNutrients?minCarbs=10&maxCarbs=50&number=${10}&random=false&apiKey=46bc28792550487884eecde5a936bb95`)
+            const data = await res.data
+            return data
+        }
+    })
+
+    const totalPages = data ? Math.ceil(data.length / 4) : 0;
+    const displayedData =
+        data
+            ? data.slice((dataShow - 1) * 4, dataShow * 4)
+            : [];
+
     return (
         <div className="max-w-7xl mx-auto py-20">
             {/* title */}
@@ -58,10 +79,13 @@ export default function SearchFiltering() {
                 <div className="w-[75%] h-96">
                     <h3 className="font-bold text-lg mb-4">Items</h3>
                     <div className="grid grid-cols-2 gap-x-6 gap-y-11">
-                        <Card />
-                        <Card />
-                        <Card />
-                        <Card />
+                        {
+                            displayedData?.map((recipe: any, i: number) => <Card key={i}
+                                title={recipe.title?.split(' ').slice(0, 3).join(' ')}
+                                img={recipe.image} protein={recipe.protein} fat={recipe.fat}
+                                calories={recipe.calories} carbs={recipe.carbs}
+                            />)
+                        }
                     </div>
                 </div>
 
@@ -70,11 +94,16 @@ export default function SearchFiltering() {
             {/* pagination */}
             <div className="flex justify-end">
                 <div className="space-x-4">
-                    <button className="bg-[#00A14966] border-[#00A149] border-2 rounded-full p-2"><GrFormPrevious className="text-xl text-[#00A149]"/></button>
-                    <button className="bg-[#00A14966] border-[#00A149] border-2 rounded-full p-2"><GrFormNext className="text-xl text-[#00A149]"/></button>
+                    <button
+                        onClick={() => {
+                            if (dataShow > 1) setDataShow((prev) => prev - 1);
+                        }} className={`${dataShow === 1 ? 'bg-[#00A14966] cursor-none' : 'bg-[#00A14933]'}  border-[#00A149] border-2 rounded-full p-2`}>
+                        <GrFormPrevious className="text-xl text-[#00A149]" /></button>
+                    <button onClick={() => {
+                        if (dataShow < totalPages) setDataShow((prev) => prev + 1);
+                    }} className={`${dataShow === totalPages ? 'bg-[#00A14966] cursor-none' : 'bg-[#00A14933]'}  border-[#00A149] border-2 rounded-full p-2`} ><GrFormNext className="text-xl text-[#00A149]" /></button>
                 </div>
             </div>
-
         </div>
     )
 }
