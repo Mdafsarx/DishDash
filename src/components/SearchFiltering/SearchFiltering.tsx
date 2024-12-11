@@ -9,12 +9,13 @@ import '../../app/loading.css'
 export default function SearchFiltering() {
 
     const [dataShow, setDataShow] = useState(1);
-    const [recipeData, setRecipeData] = useState([])
-    const [recipeData2, setRecipeData2] = useState([])
+    const [recipeData, setRecipeData] = useState([]);
+    const [recipeData2, setRecipeData2] = useState([]);
+    const [search, setSearch] = useState('')
     const { isLoading } = useQuery({
         queryKey: ['data'],
         queryFn: async () => {
-            const res = await axios(`https://api.spoonacular.com/recipes/findByNutrients?minCarbs=10&maxCarbs=50&number=11&random=false&apiKey=7b7a3a45ef204c2daac66d2a00f13f2d`)
+            const res = await axios(`https://api.spoonacular.com/recipes/findByNutrients?minCarbs=10&maxCarbs=50&number=11&random=false&apiKey=${process.env.API_KEY}`)
             const data = await res.data.slice(1)
             setRecipeData(data)
             setRecipeData2(data)
@@ -37,6 +38,10 @@ export default function SearchFiltering() {
     const handleFat = (e: any) => {
         const fatData = recipeData2?.filter((d: any) => d?.fat === e.target.value);
         setRecipeData(fatData)
+    }
+    const handleSearch = () => {
+        const searchedData = recipeData2?.filter((d: any) => d?.title.toLowerCase().includes(search))
+        setRecipeData(searchedData)
     }
 
     // unique value filtered
@@ -65,12 +70,12 @@ export default function SearchFiltering() {
                     <h3 className="font-bold text-lg mb-4">Filters Option</h3>
                     <div className="space-y-4">
                         <label className="input input-bordered flex items-center gap-2">
-                            <input type="text" className="grow" placeholder="Recipe name" />
-                            <svg
+                            <input type="text" onChange={(e) => setSearch(e.target.value)} className="grow" placeholder="Recipe name" />
+                            <svg onClick={handleSearch}
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 16 16"
                                 fill="currentColor"
-                                className="h-4 w-4 opacity-70">
+                                className="h-4 w-4 opacity-70 cursor-pointer">
                                 <path
                                     fillRule="evenodd"
                                     d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
