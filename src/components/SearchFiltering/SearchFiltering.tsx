@@ -4,24 +4,29 @@ import Card from "./Card";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import axios from "axios";
+import './loading.css'
 
 export default function SearchFiltering() {
 
     const [dataShow, setDataShow] = useState(1)
-    const { data } = useQuery({
+    const { data, isLoading } = useQuery({
         queryKey: ['data'],
         queryFn: async () => {
-            const res = await axios(`https://api.spoonacular.com/recipes/findByNutrients?minCarbs=10&maxCarbs=50&number=${11}&random=false&apiKey=46bc28792550487884eecde5a936bb95`)
+            const res = await axios(`https://api.spoonacular.com/recipes/findByNutrients?minCarbs=10&maxCarbs=50&number=11&random=false&apiKey=14d82ed57ecd4f8cb6a505793be84d2b`)
             const data = await res.data.slice(1)
             return data
         }
     })
+    console.log(data, ' ')
+
+    const protein: any[] = [...new Set(data?.map((d: any) => d.protein))];
+    const calories: any[] = [...new Set(data?.map((d: any) => d.calories))];
+    const carbs: any[] = [...new Set(data?.map((d: any) => d.carbs))];
+    const fat: any[] = [...new Set(data?.map((d: any) => d.fat))];
+
 
     const totalPages = data ? Math.ceil(data.length / 4) : 0;
-    const displayedData =
-        data
-            ? data.slice((dataShow - 1) * 4, dataShow * 4)
-            : [];
+    const displayedData = data ? data.slice((dataShow - 1) * 4, dataShow * 4) : [];
 
     return (
         <div className="max-w-7xl mx-auto py-20">
@@ -38,7 +43,7 @@ export default function SearchFiltering() {
                     <h3 className="font-bold text-lg mb-4">Filters Option</h3>
                     <div className="space-y-4">
                         <label className="input input-bordered flex items-center gap-2">
-                            <input type="text" className="grow" placeholder="Search" />
+                            <input type="text" className="grow" placeholder="Recipe name" />
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 16 16"
@@ -52,43 +57,58 @@ export default function SearchFiltering() {
                         </label>
 
                         <select className="select select-bordered w-full max-w-xs">
-                            <option disabled selected>Who shot first?</option>
-                            <option>Han Solo</option>
-                            <option>Greedo</option>
+                            <option disabled selected>Protein</option>
+                            {
+                                protein?.map((p, i) => <option key={i} value={p}>{p}</option>)
+                            }
                         </select>
 
                         <select className="select select-bordered w-full max-w-xs">
-                            <option disabled selected>Who shot first?</option>
-                            <option>Han Solo</option>
-                            <option>Greedo</option>
+                            <option disabled selected>Calories</option>
+                            {
+                                calories?.map((c, i) => <option key={i} value={c}>{c}</option>)
+                            }
                         </select>
 
                         <select className="select select-bordered w-full max-w-xs">
-                            <option disabled selected>Who shot first?</option>
-                            <option>Han Solo</option>
-                            <option>Greedo</option>
+                            <option disabled selected>carbs</option>
+                            {
+                                carbs?.map((c, i) => <option key={i} value={c}>{c}</option>)
+                            }
                         </select>
 
                         <select className="select select-bordered w-full max-w-xs">
-                            <option disabled selected>Who shot first?</option>
-                            <option>Han Solo</option>
-                            <option>Greedo</option>
+                            <option disabled selected>fat</option>
+                            {
+                                fat?.map((f, i) => <option key={i} value={f}>{f}</option>)
+                            }
                         </select>
                     </div>
                 </div>
+                {/* items */}
                 <div className="w-[75%] h-96">
                     <h3 className="font-bold text-lg mb-4">Items</h3>
-                    <div className="grid grid-cols-2 gap-x-6 gap-y-11">
-                        {
-                            displayedData?.map((recipe: any, i: number) => <Card key={i}
-                                title={recipe.title?.split(' ').slice(0, 3).join(' ')}
-                                img={recipe.image} protein={recipe.protein} fat={recipe.fat}
-                                calories={recipe.calories} carbs={recipe.carbs} id={recipe.id}
-                            />)
-                        }
-                    </div>
+                    {
+                        isLoading
+                            ? <div className="flex items-center justify-center h-[73%]">
+                                <div className="cube">
+                                    <div className="cube_item cube_x"></div>
+                                    <div className="cube_item cube_y"></div>
+                                    <div className="cube_item cube_y"></div>
+                                    <div className="cube_item cube_x"></div>
+                                </div>
+                            </div>
+                            : <div className="grid grid-cols-2 gap-x-6 gap-y-11">
+                                {
+                                    displayedData?.map((recipe: any, i: number) => <Card key={i}
+                                        title={recipe.title?.split(' ').slice(0, 3).join(' ')}
+                                        img={recipe.image} protein={recipe.protein} fat={recipe.fat}
+                                        calories={recipe.calories} carbs={recipe.carbs} id={recipe.id}
+                                    />)
+                                }
+                            </div>
+                    }
                 </div>
-
             </div>
 
             {/* pagination */}
@@ -97,11 +117,11 @@ export default function SearchFiltering() {
                     <button
                         onClick={() => {
                             if (dataShow > 1) setDataShow((prev) => prev - 1);
-                        }} className={`${dataShow === 1 ? 'bg-[#00A14966] cursor-none' : 'bg-[#00A14933]'}  border-[#00A149] border-2 rounded-full p-2`}>
-                        <GrFormPrevious className="text-xl text-[#00A149]" /></button>
+                        }} className={`${dataShow === 1 ? 'bg-[#D1212166] cursor-none' : 'bg-[#D1212133]'}  border-[#D12121] border-2 rounded-full p-2`}>
+                        <GrFormPrevious className="text-xl text-[#D12121]" /></button>
                     <button onClick={() => {
                         if (dataShow < totalPages) setDataShow((prev) => prev + 1);
-                    }} className={`${dataShow === totalPages ? 'bg-[#00A14966] cursor-none' : 'bg-[#00A14933]'}  border-[#00A149] border-2 rounded-full p-2`} ><GrFormNext className="text-xl text-[#00A149]" /></button>
+                    }} className={`${dataShow === totalPages ? 'bg-[#D1212166] cursor-none' : 'bg-[#D1212133]'}  border-[#D12121] border-2 rounded-full p-2`} ><GrFormNext className="text-xl text-[#D12121]" /></button>
                 </div>
             </div>
         </div>
