@@ -2,8 +2,8 @@
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 import Card from "./Card";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { useState } from "react";
+import axios from "axios";
 
 export default function SearchFiltering() {
 
@@ -11,8 +11,8 @@ export default function SearchFiltering() {
     const { data } = useQuery({
         queryKey: ['data'],
         queryFn: async () => {
-            const res = await axios(`https://api.spoonacular.com/recipes/findByNutrients?minCarbs=10&maxCarbs=50&number=${10}&random=false&apiKey=46bc28792550487884eecde5a936bb95`)
-            const data = await res.data
+            const res = await axios(`https://api.spoonacular.com/recipes/findByNutrients?minCarbs=10&maxCarbs=50&number=${11}&random=false&apiKey=46bc28792550487884eecde5a936bb95`)
+            const data = await res.data.slice(1)
             return data
         }
     })
@@ -83,7 +83,7 @@ export default function SearchFiltering() {
                             displayedData?.map((recipe: any, i: number) => <Card key={i}
                                 title={recipe.title?.split(' ').slice(0, 3).join(' ')}
                                 img={recipe.image} protein={recipe.protein} fat={recipe.fat}
-                                calories={recipe.calories} carbs={recipe.carbs}
+                                calories={recipe.calories} carbs={recipe.carbs} id={recipe.id}
                             />)
                         }
                     </div>

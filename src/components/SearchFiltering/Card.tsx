@@ -4,11 +4,11 @@ import { ImPower } from "react-icons/im";
 import { IoMdTime } from "react-icons/io";
 import { MdDone } from "react-icons/md";
 
-type CardProps = { title: string, img: string, protein: string, fat: string, calories: number, carbs: string };
+type CardProps = { title: string, img: string, protein: string, fat: string, calories: number, carbs: string, id: number};
 
-export default function Card({ title, img, protein, fat, calories, carbs }: CardProps) {
+export default function Card({ title, img, protein, fat, calories, carbs , id}: CardProps) {
     return (
-        <Link href={`/details/${'1'}`} className="flex items-center gap-5">
+        <Link href={`/details/${id}`} className="flex items-center gap-5">
 
             <img src={img} className="w-44 h-32 object-fill rounded-2xl" alt="Cover image" />
 

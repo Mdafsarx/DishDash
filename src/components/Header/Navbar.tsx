@@ -5,11 +5,12 @@ import { GiMeal } from "react-icons/gi";
 
 
 export default function Navbar() {
-  const navLink= usePathname()
+  const navLink = usePathname()
   return (
     <div className={`flex justify-between items-center h-20 max-w-[95%] mx-auto ${navLink !== '/' && 'border-'}`}>
       {/* name and link */}
       <div className="flex items-center gap-9">
+
         <div>
           {/* dropdown for small device */}
           <div className="dropdown hidden">
@@ -49,12 +50,13 @@ export default function Navbar() {
 
         <div className="hidden lg:flex">
           <ul className="flex items-center gap-x-5 *:">
-            <Link href={'/'}>Home</Link>
-            <Link href={'/'}>Planner</Link>
-            <Link href={'/favorites'}>Favorites</Link>
-            <Link href={'/'}>Contact-us</Link>
+            <Link href={'/'} className={navLink === '/' ? 'bg-[#00A149] text-white font-bold rounded-md p-2 py-1' : 'font-bold'}>Home</Link>
+            <Link href={'/planner'} className={navLink === '/planner' ? 'bg-[#00A149] text-white font-bold rounded-md p-2 py-1' : 'font-bold'}>Planner</Link>
+            <Link href={'/favorites'} className={navLink === '/favorites' ? 'bg-[#00A149] text-white font-bold rounded-md p-2 py-1' : 'font-bold'}>Favorites</Link>
+            <Link href={'/contact-us'} className={navLink === '/contact-us' ? 'bg-[#00A149] text-white font-bold rounded-md p-2 py-1' : 'font-bold'}>Contact-us</Link>
           </ul>
         </div>
+
       </div>
       {/* login and profile */}
       <div>

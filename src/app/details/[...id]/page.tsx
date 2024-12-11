@@ -1,13 +1,29 @@
 'use client'
 import { Rating } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { useParams } from "next/navigation";
+import { CiRepeat } from "react-icons/ci";
 import { GrFavorite } from "react-icons/gr";
+import { ImPower } from "react-icons/im";
 import { IoMdTime } from "react-icons/io";
 import { MdDone } from "react-icons/md";
 import { FacebookIcon, FacebookShareButton, LinkedinIcon, LinkedinShareButton, RedditIcon, RedditShareButton, TwitterIcon, TwitterShareButton } from "react-share";
 
 export default function page() {
-
     const shareUrl: any = 'https://example.com';
+
+    const params = useParams();
+    const { data, isLoading } = useQuery({
+        queryKey: ['details-data'],
+        queryFn: async () => {
+            const res = await axios(`https://api.spoonacular.com/recipes/findByNutrients?minCarbs=10&maxCarbs=50&number=${10}&random=false&apiKey=46bc28792550487884eecde5a936bb95`)
+            const data = await res.data.filter((d: any) => d?.id == params?.id)
+            return data[0]
+        },
+        enabled: !!params
+    })
+    console.log(data)
 
     return (
         <div>
@@ -23,14 +39,15 @@ export default function page() {
                     <div className="flex gap-x-8">
                         {/* image */}
                         <figure className="w-1/2">
-                            <img className="rounded-2xl" src="https://res.cloudinary.com/dz1fy2tof/image/upload/v1733655960/brooke-lark-nTZOILVZuOg-unsplash_urjjyk.jpg" alt="" />
+                            <img className="rounded-2xl w-full" src={data?.image} alt="" />
                         </figure>
-                        {/*  */}
+                        {/* details */}
                         <div className="w-1/2">
-                            <h1 className="text-3xl font-bold">Grilled Chicken and ahmed</h1>
+                            <h1 title={data?.title} className="text-3xl font-bold">
+                                {data?.title?.split(' ').slice(0, 3).join(' ')}...</h1>
                             {/* rating and cuisine name */}
                             <div className="flex items-center justify-between border-b py-[1.15rem]">
-                                <p><span className="bg-[#00A149] rounded-full p-2 text-white">Italian</span></p>
+                                <p><span className="bg-[#00A149] rounded-full p-2 text-white">{data?.protein} protein</span></p>
                                 <Rating name="read-only" value={5} readOnly />
                             </div>
                             <p className="py-[1.15rem] border-b">
@@ -38,9 +55,9 @@ export default function page() {
                             </p>
                             <div className="space-y-2 border-b py-[1.15rem]">
                                 <p><span className="font-bold">Diet:</span> None</p>
-                                <p><span className="font-bold">Calories:</span> 800</p>
-                                <p><span className="font-bold">PrepTime:</span> 20</p>
-                                <p><span className="font-bold">Steps:</span> 10</p>
+                                <p><span className="font-bold">Calories:</span> {data?.calories}</p>
+                                <p><span className="font-bold">carbs:</span> {data?.carbs}</p>
+                                <p><span className="font-bold">fat:</span> {data?.fat}</p>
                             </div>
                             <div className="pt-[1.15rem] flex items-center justify-between">
                                 <p className="font-bold">Share it:</p>
@@ -99,14 +116,16 @@ export default function page() {
                         </ul>
                         <h1 className="text-2xl border-b border-white pb-2">Menu</h1>
                         <div>
-                            <p className="flex items-center gap-1.5 py-2"><IoMdTime className="text-lg text-[#00A149]" /> 30 min</p>
-                            <p className="flex items-center gap-1.5"><MdDone className="text-lg text-[#00A149]" /> 30 min</p>
+                            <p className="flex items-center gap-1.5 py-2"><ImPower className="text-lg text-[#00A149]" />
+                                {data?.calories} cal</p>
+                            <p className="flex items-center gap-1.5">
+                                <CiRepeat className="text-2xl text-[#00A149]" />
+                                {data?.carbs} carb</p>
                         </div>
                     </div>
 
                 </div>
             </div>
-
         </div>
     )
 }
