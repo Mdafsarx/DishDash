@@ -6,9 +6,9 @@ import { useParams } from "next/navigation";
 import { CiRepeat } from "react-icons/ci";
 import { GrFavorite } from "react-icons/gr";
 import { ImPower } from "react-icons/im";
-import { IoMdTime } from "react-icons/io";
-import { MdDone } from "react-icons/md";
 import { FacebookIcon, FacebookShareButton, LinkedinIcon, LinkedinShareButton, RedditIcon, RedditShareButton, TwitterIcon, TwitterShareButton } from "react-share";
+import '../../loading.css'
+
 
 export default function page() {
     const shareUrl: any = 'https://example.com';
@@ -17,13 +17,21 @@ export default function page() {
     const { data, isLoading } = useQuery({
         queryKey: ['details-data'],
         queryFn: async () => {
-            const res = await axios(`https://api.spoonacular.com/recipes/findByNutrients?minCarbs=10&maxCarbs=50&number=${10}&random=false&apiKey=46bc28792550487884eecde5a936bb95`)
+            const res = await axios(`https://api.spoonacular.com/recipes/findByNutrients?minCarbs=10&maxCarbs=50&number=11&random=false&apiKey=14d82ed57ecd4f8cb6a505793be84d2b`)
             const data = await res.data.filter((d: any) => d?.id == params?.id)
             return data[0]
         },
         enabled: !!params
     })
-    console.log(data)
+
+    // if (isLoading) return <div className="flex items-center justify-center min-h-[calc(100vh-80px)]">
+    //     <div className="cube">
+    //         <div className="cube_item cube_x"></div>
+    //         <div className="cube_item cube_y"></div>
+    //         <div className="cube_item cube_y"></div>
+    //         <div className="cube_item cube_x"></div>
+    //     </div>
+    // </div>
 
     return (
         <div>

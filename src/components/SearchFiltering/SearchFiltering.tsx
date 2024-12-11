@@ -2,31 +2,53 @@
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 import Card from "./Card";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import './loading.css'
+import '../../app/loading.css'
 
 export default function SearchFiltering() {
 
-    const [dataShow, setDataShow] = useState(1)
-    const { data, isLoading } = useQuery({
+    const [dataShow, setDataShow] = useState(1);
+    const [recipeData, setRecipeData] = useState([])
+    const [recipeData2, setRecipeData2] = useState([])
+    const { isLoading } = useQuery({
         queryKey: ['data'],
         queryFn: async () => {
-            const res = await axios(`https://api.spoonacular.com/recipes/findByNutrients?minCarbs=10&maxCarbs=50&number=11&random=false&apiKey=14d82ed57ecd4f8cb6a505793be84d2b`)
+            const res = await axios(`https://api.spoonacular.com/recipes/findByNutrients?minCarbs=10&maxCarbs=50&number=11&random=false&apiKey=7b7a3a45ef204c2daac66d2a00f13f2d`)
             const data = await res.data.slice(1)
-            return data
+            setRecipeData(data)
+            setRecipeData2(data)
         }
     })
-    console.log(data, ' ')
-
-    const protein: any[] = [...new Set(data?.map((d: any) => d.protein))];
-    const calories: any[] = [...new Set(data?.map((d: any) => d.calories))];
-    const carbs: any[] = [...new Set(data?.map((d: any) => d.carbs))];
-    const fat: any[] = [...new Set(data?.map((d: any) => d.fat))];
 
 
-    const totalPages = data ? Math.ceil(data.length / 4) : 0;
-    const displayedData = data ? data.slice((dataShow - 1) * 4, dataShow * 4) : [];
+    const handleProtein = (e: any) => {
+        const proteinData = recipeData2?.filter((d: any) => d?.protein === e.target.value);
+        setRecipeData(proteinData)
+    }
+    const handleCalories = (e: any) => {
+        const caloriesData = recipeData2?.filter((d: any) => d?.calories === parseInt(e.target.value));
+        setRecipeData(caloriesData)
+    }
+    const handleCarbs = (e: any) => {
+        const carbsData = recipeData2?.filter((d: any) => d?.carbs === e.target.value);
+        setRecipeData(carbsData)
+    }
+    const handleFat = (e: any) => {
+        const fatData = recipeData2?.filter((d: any) => d?.fat === e.target.value);
+        setRecipeData(fatData)
+    }
+
+    // unique value filtered
+    const protein: any[] = [...new Set(recipeData2?.map((d: any) => parseInt(d.protein)))].sort((a: any, b: any) => b - a);
+    const calories: any[] = [...new Set(recipeData2?.map((d: any) => parseInt(d.calories)))].sort((a: any, b: any) => b - a);
+    const carbs: any[] = [...new Set(recipeData2?.map((d: any) => parseInt(d.carbs)))].sort((a: any, b: any) => b - a);
+    const fat: any[] = [...new Set(recipeData2?.map((d: any) => parseInt(d.fat)))].sort((a: any, b: any) => b - a);
+
+    const totalPages = recipeData ? Math.ceil(recipeData.length / 4) : 0;
+    const displayedData = recipeData ? recipeData.slice((dataShow - 1) * 4, dataShow * 4) : [];
+
+
 
     return (
         <div className="max-w-7xl mx-auto py-20">
@@ -56,31 +78,31 @@ export default function SearchFiltering() {
                             </svg>
                         </label>
 
-                        <select className="select select-bordered w-full max-w-xs">
+                        <select onChange={handleProtein} className="select select-bordered w-full max-w-xs">
                             <option disabled selected>Protein</option>
                             {
-                                protein?.map((p, i) => <option key={i} value={p}>{p}</option>)
+                                protein?.map((p, i) => <option key={i}>{p}g</option>)
                             }
                         </select>
 
-                        <select className="select select-bordered w-full max-w-xs">
+                        <select onChange={handleCalories} className="select select-bordered w-full max-w-xs">
                             <option disabled selected>Calories</option>
                             {
-                                calories?.map((c, i) => <option key={i} value={c}>{c}</option>)
+                                calories?.map((c, i) => <option key={i}>{c}</option>)
                             }
                         </select>
 
-                        <select className="select select-bordered w-full max-w-xs">
+                        <select onChange={handleCarbs} className="select select-bordered w-full max-w-xs">
                             <option disabled selected>carbs</option>
                             {
-                                carbs?.map((c, i) => <option key={i} value={c}>{c}</option>)
+                                carbs?.map((c, i) => <option key={i}>{c}g</option>)
                             }
                         </select>
 
-                        <select className="select select-bordered w-full max-w-xs">
+                        <select onChange={handleFat} className="select select-bordered w-full max-w-xs">
                             <option disabled selected>fat</option>
                             {
-                                fat?.map((f, i) => <option key={i} value={f}>{f}</option>)
+                                fat?.map((f, i) => <option key={i}>{f}g</option>)
                             }
                         </select>
                     </div>
