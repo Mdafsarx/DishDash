@@ -2,12 +2,30 @@
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 import Card from "./Card";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import '../../app/loading.css'
 
-export default function SearchFiltering() {
+interface Recipe {
+    protein: string,
+    calories: number,
+    carbs: string,
+    fat: string,
+    title: string,
+    image: string,
+    id:number
+}
+interface RecipeSort {
+    protein: string,
+    calories: string,
+    carbs: string,
+    fat: string,
+}
+interface search {
+    title: string,
+}
 
+export default function SearchFiltering() {
     const [dataShow, setDataShow] = useState(1);
     const [recipeData, setRecipeData] = useState([]);
     const [recipeData2, setRecipeData2] = useState([]);
@@ -22,33 +40,33 @@ export default function SearchFiltering() {
         }
     })
 
-
-    const handleProtein = (e: any) => {
-        const proteinData = recipeData2?.filter((d: any) => d?.protein === e.target.value);
+    const handleProtein = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const proteinData = recipeData2?.filter((d: Recipe) => d?.protein === e.target.value);
         setRecipeData(proteinData)
     }
-    const handleCalories = (e: any) => {
-        const caloriesData = recipeData2?.filter((d: any) => d?.calories === parseInt(e.target.value));
+    const handleCalories = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const caloriesData = recipeData2?.filter((d: Recipe) => d?.calories === parseInt(e.target.value));
         setRecipeData(caloriesData)
     }
-    const handleCarbs = (e: any) => {
-        const carbsData = recipeData2?.filter((d: any) => d?.carbs === e.target.value);
+    const handleCarbs = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const carbsData = recipeData2?.filter((d: Recipe) => d?.carbs === e.target.value);
         setRecipeData(carbsData)
     }
-    const handleFat = (e: any) => {
-        const fatData = recipeData2?.filter((d: any) => d?.fat === e.target.value);
+    const handleFat = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const fatData = recipeData2?.filter((d: Recipe) => d?.fat === e.target.value);
         setRecipeData(fatData)
     }
+
     const handleSearch = () => {
-        const searchedData = recipeData2?.filter((d: any) => d?.title.toLowerCase().includes(search))
+        const searchedData = recipeData2?.filter((d: search) => d?.title.toLowerCase().includes(search))
         setRecipeData(searchedData)
     }
 
     // unique value filtered
-    const protein: any[] = [...new Set(recipeData2?.map((d: any) => parseInt(d.protein)))].sort((a: any, b: any) => b - a);
-    const calories: any[] = [...new Set(recipeData2?.map((d: any) => parseInt(d.calories)))].sort((a: any, b: any) => b - a);
-    const carbs: any[] = [...new Set(recipeData2?.map((d: any) => parseInt(d.carbs)))].sort((a: any, b: any) => b - a);
-    const fat: any[] = [...new Set(recipeData2?.map((d: any) => parseInt(d.fat)))].sort((a: any, b: any) => b - a);
+    const protein: number[] = [...new Set(recipeData2?.map((d: RecipeSort) => parseInt(d.protein)))].sort((a, b) => b - a);
+    const calories: number[] = [...new Set(recipeData2?.map((d: RecipeSort) => parseInt(d.calories)))].sort((a, b) => b - a);
+    const carbs: number[] = [...new Set(recipeData2?.map((d: RecipeSort) => parseInt(d.carbs)))].sort((a, b) => b - a);
+    const fat: number[] = [...new Set(recipeData2?.map((d: RecipeSort) => parseInt(d.fat)))].sort((a, b) => b - a);
 
     const totalPages = recipeData ? Math.ceil(recipeData.length / 4) : 0;
     const displayedData = recipeData ? recipeData.slice((dataShow - 1) * 4, dataShow * 4) : [];
@@ -127,7 +145,7 @@ export default function SearchFiltering() {
                             </div>
                             : <div className="grid grid-cols-2 gap-x-6 gap-y-11">
                                 {
-                                    displayedData?.map((recipe: any, i: number) => <Card key={i}
+                                    displayedData?.map((recipe: Recipe, i: number) => <Card key={i}
                                         title={recipe.title?.split(' ').slice(0, 3).join(' ')}
                                         img={recipe.image} protein={recipe.protein} fat={recipe.fat}
                                         calories={recipe.calories} carbs={recipe.carbs} id={recipe.id}

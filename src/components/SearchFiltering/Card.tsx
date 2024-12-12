@@ -1,8 +1,6 @@
 import Link from "next/link";
 import { CiRepeat } from "react-icons/ci";
 import { ImPower } from "react-icons/im";
-import { IoMdTime } from "react-icons/io";
-import { MdDone } from "react-icons/md";
 
 type CardProps = { title: string, img: string, protein: string, fat: string, calories: number, carbs: string, id: number};
 
