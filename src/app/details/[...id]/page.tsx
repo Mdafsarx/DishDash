@@ -7,11 +7,14 @@ import { CiRepeat } from "react-icons/ci";
 import { GrFavorite } from "react-icons/gr";
 import { ImPower } from "react-icons/im";
 import { FacebookIcon, FacebookShareButton, LinkedinIcon, LinkedinShareButton, RedditIcon, RedditShareButton, TwitterIcon, TwitterShareButton } from "react-share";
+import { addFavorite, removeFavorite, clearFavorites } from '../../../store/favoriteSlice';
+import { useSelector, useDispatch } from 'react-redux';
 import '../../loading.css'
 
 
 export default function page() {
     const shareUrl: any = 'https://example.com';
+    const dispatch = useDispatch();
 
     const params = useParams();
     const { data, isLoading } = useQuery({
@@ -24,6 +27,13 @@ export default function page() {
         enabled: !!params
     })
 
+    const handleFavorite = () => {
+        const storedDataString = localStorage?.getItem('favoriteData');
+        const storedData: any[] = storedDataString ? JSON.parse(storedDataString) : [];
+        storedData.push(data);
+        localStorage.setItem('favoriteData', JSON.stringify(storedData));
+    }
+
     // if (isLoading) return <div className="flex items-center justify-center min-h-[calc(100vh-80px)]">
     //     <div className="cube">
     //         <div className="cube_item cube_x"></div>
@@ -32,6 +42,7 @@ export default function page() {
     //         <div className="cube_item cube_x"></div>
     //     </div>
     // </div>
+
 
     return (
         <div>
@@ -85,7 +96,7 @@ export default function page() {
                                 </div>
                             </div>
                             <div className="pt-2">
-                                <p className="flex items-center gap-x-2"><GrFavorite className="text-xl" /> Add to favorite</p>
+                                <p className="flex items-center gap-x-2"><GrFavorite className="text-xl" onClick={handleFavorite} /> Add to favorite</p>
                             </div>
                         </div>
                     </div>

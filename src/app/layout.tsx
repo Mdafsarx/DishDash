@@ -6,6 +6,7 @@ import Navbar from "@/components/Header/Navbar";
 import QueryProvider from "./QueryProvider";
 
 
+
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",

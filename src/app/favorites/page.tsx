@@ -1,4 +1,7 @@
+'use client'
+
 export default function page() {
+
   return (
     <div>
       {/* favorite and filter */}
