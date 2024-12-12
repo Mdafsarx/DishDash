@@ -7,17 +7,15 @@ import { CiRepeat } from "react-icons/ci";
 import { GrFavorite } from "react-icons/gr";
 import { ImPower } from "react-icons/im";
 import { FacebookIcon, FacebookShareButton, LinkedinIcon, LinkedinShareButton, RedditIcon, RedditShareButton, TwitterIcon, TwitterShareButton } from "react-share";
-import { addFavorite, removeFavorite, clearFavorites } from '../../../store/favoriteSlice';
-import { useSelector, useDispatch } from 'react-redux';
 import '../../loading.css'
+import toast from "react-hot-toast";
 
 
 export default function page() {
     const shareUrl: any = 'https://example.com';
-    const dispatch = useDispatch();
 
     const params = useParams();
-    const { data, isLoading } = useQuery({
+    const { data } = useQuery({
         queryKey: ['details-data'],
         queryFn: async () => {
             const res = await axios(`https://api.spoonacular.com/recipes/findByNutrients?minCarbs=10&maxCarbs=50&number=11&random=false&apiKey=14d82ed57ecd4f8cb6a505793be84d2b`)
@@ -32,6 +30,7 @@ export default function page() {
         const storedData: any[] = storedDataString ? JSON.parse(storedDataString) : [];
         storedData.push(data);
         localStorage.setItem('favoriteData', JSON.stringify(storedData));
+        toast.success('Item added to favorites!')
     }
 
     // if (isLoading) return <div className="flex items-center justify-center min-h-[calc(100vh-80px)]">

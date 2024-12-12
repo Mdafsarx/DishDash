@@ -4,6 +4,7 @@ import "./globals.css";
 import Footer from "@/components/Footer/Footer";
 import Navbar from "@/components/Header/Navbar";
 import QueryProvider from "./QueryProvider";
+import { Toaster } from 'react-hot-toast';
 
 
 
@@ -33,6 +34,7 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <QueryProvider>
           <Navbar />
+          <Toaster />
           {children}
           <Footer />
         </QueryProvider>
