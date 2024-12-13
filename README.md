@@ -1,6 +1,6 @@
-# DISHDASH
+# Dishdash
 ## Live Site
-- [live site](https://spotter-task.vercel.app)
+- [live site](https://dishdash-lake.vercel.app)
 
 ## Project Presentation
 - [presentation](https://www.loom.com/share/a6ed9aff76944726b4954dfda199d332?sid=cbfd6312-10d0-4ba2-bc3e-42b8da8e543d)
