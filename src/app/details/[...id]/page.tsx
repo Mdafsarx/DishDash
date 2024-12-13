@@ -10,16 +10,20 @@ import { FacebookIcon, FacebookShareButton, LinkedinIcon, LinkedinShareButton, R
 import '../../loading.css'
 import toast from "react-hot-toast";
 
+type localStorageArray = { title: string, image: string, protein: string, fat: string, calories: number, carbs: string, id: number }
+interface detailsData {
+    id: number
+}
 
-export default function page() {
-    const shareUrl: any = 'https://example.com';
+export default function Page() {
+    const shareUrl: string = 'https://example.com';
 
     const params = useParams();
     const { data } = useQuery({
         queryKey: ['details-data'],
         queryFn: async () => {
             const res = await axios(`https://api.spoonacular.com/recipes/findByNutrients?minCarbs=10&maxCarbs=50&number=11&random=false&apiKey=14d82ed57ecd4f8cb6a505793be84d2b`)
-            const data = await res.data.filter((d: any) => d?.id == params?.id)
+            const data = await res.data.filter((d: detailsData) => d?.id === Number(params?.id))
             return data[0]
         },
         enabled: !!params
@@ -27,7 +31,7 @@ export default function page() {
 
     const handleFavorite = () => {
         const storedDataString = localStorage?.getItem('favoriteData');
-        const storedData: any[] = storedDataString ? JSON.parse(storedDataString) : [];
+        const storedData: localStorageArray[] = storedDataString ? JSON.parse(storedDataString) : [];
         storedData.push(data);
         localStorage.setItem('favoriteData', JSON.stringify(storedData));
         toast.success('Item added to favorites!')

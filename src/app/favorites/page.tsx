@@ -7,12 +7,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { setLoading } from '../../store/loadingSlice';
 type CardProps = { title: string, image: string, protein: string, calories: number, id: number };
 import '../loading.css'
+interface redux {
+  loading: { loading: boolean };
+}
+interface recipe {
+  calories: number
+}
 
 
-export default function page() {
+export default function Page() {
   const [favoriteData, setFavoriteData] = useState([])
   const dispatch = useDispatch();
-  const loading = useSelector((state: any) => state.loading.loading);
+  const loading = useSelector((state: redux) => state.loading.loading);
 
   useEffect(() => {
     const localStorageData = localStorage?.getItem('favoriteData');
@@ -21,11 +27,11 @@ export default function page() {
     dispatch(setLoading(false))
   }, []);
 
-  const handleSort = (e: any) => {
+  const handleSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
     if (e.target.value === 'Low to high') {
-      setFavoriteData([...favoriteData].sort((a: any, b: any) => a?.calories - b?.calories))
+      setFavoriteData([...favoriteData].sort((a: recipe, b: recipe) => a?.calories - b?.calories))
     } else {
-      setFavoriteData([...favoriteData].sort((a: any, b: any) => b?.calories - a?.calories))
+      setFavoriteData([...favoriteData].sort((a: recipe, b: recipe) => b?.calories - a?.calories))
     }
   }
   const handleDelete = (index: number) => {
@@ -60,7 +66,7 @@ export default function page() {
         !favoriteData?.length
           ? <div className="flex flex-col items-center justify-center min-h-[calc(100vh-175px)]">
             <img className="size-40" src="https://res.cloudinary.com/dz1fy2tof/image/upload/v1734016584/empty-folder_scx0zy.png" alt="" />
-            <h3 className="text-xl font-bold text-[#D12121]">You don't add anything!</h3>
+            <h3 className="text-xl font-bold text-[#D12121]">You don&#39;t add anything!</h3>
           </div>
           : <div className="max-w-7xl mx-auto py-10 pb-20">
             <div className="overflow-x-auto">

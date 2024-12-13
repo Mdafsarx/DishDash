@@ -2,9 +2,9 @@ import Link from "next/link";
 import { CiRepeat } from "react-icons/ci";
 import { ImPower } from "react-icons/im";
 
-type CardProps = { title: string, img: string, protein: string, fat: string, calories: number, carbs: string, id: number};
+type CardProps = { title: string, img: string, protein: string, fat: string, calories: number, carbs: string, id: number };
 
-export default function Card({ title, img, protein, fat, calories, carbs , id}: CardProps) {
+export default function Card({ title, img, protein, fat, calories, carbs, id }: CardProps) {
     return (
         <Link href={`/details/${id}`} className="flex items-center gap-5">
 
