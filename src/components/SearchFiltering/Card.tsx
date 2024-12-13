@@ -6,9 +6,9 @@ type CardProps = { title: string, img: string, protein: string, fat: string, cal
 
 export default function Card({ title, img, protein, fat, calories, carbs, id }: CardProps) {
     return (
-        <Link href={`/details/${id}`} className="flex items-center gap-5">
+        <Link href={`/details/${id}`} className="flex flex-col md:flex-row md:items-center gap-5">
 
-            <img src={img} className="w-44 h-32 object-fill rounded-2xl" alt="Cover image" />
+            <img src={img} className="w-full md:w-44 md:h-32 object-fill rounded-2xl" alt="Cover image" />
 
             <div className="w-2/3">
                 <h1 className="font-bold text-lg mb-1.5">{title}</h1>

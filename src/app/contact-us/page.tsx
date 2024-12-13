@@ -36,7 +36,7 @@ export default function page() {
     return (
         <div className="max-w-7xl mx-auto">
             <section>
-                <div className="px-6 py-12">
+                <div className="px-6 pb-20 md:pb-12 xl:py-12">
                     <div className="grid grid-cols-1 gap-12 mt-10 lg:grid-cols-3">
                         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-1">
                             {contactItems.map((item, index) => (

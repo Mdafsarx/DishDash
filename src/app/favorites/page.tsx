@@ -54,8 +54,8 @@ export default function Page() {
   return (
     <div>
       {/* favorite and filter */}
-      <div className="p-6 border-y border-[#00A149] flex items-center justify-between px-10">
-        <h1 className="uppercase text-2xl font-black">Favorite({favoriteData?.length})</h1>
+      <div className="p-6 border-y border-[#00A149] flex items-center justify-center md:justify-between px-10">
+        <h1 className="uppercase text-2xl font-black hidden md:block">Favorite({favoriteData?.length})</h1>
         <select onChange={handleSort} className="select select-bordered border-2 border-black w-full max-w-40">
           <option disabled selected>Sort by calories</option>
           <option>Low to high</option>
@@ -74,7 +74,7 @@ export default function Page() {
                 {/* head */}
                 <thead>
                   <tr className="border-b border-gray-200">
-                    <th>Image</th>
+                    <th className="hidden md:table-cell">Image</th>
                     <th>Recipe Name</th>
                     <th>Calories</th>
                     <th>protein</th>
@@ -87,7 +87,7 @@ export default function Page() {
                   {
                     favoriteData?.map(({ title, image, protein, calories, id }: CardProps, i) => <tr key={i} className="border-b border-gray-200">
                       {/* img */}
-                      <td><img src={image} alt="Cover image" className="h-24 w-28 object-cover rounded-md" /></td>
+                      <td className="hidden md:table-cell"><img src={image} alt="Cover image" className="h-24 w-28 object-cover rounded-md" /></td>
                       <td>{title?.split(' ').slice(0, 3).join(' ')}</td>
                       <td>{calories}</td>
                       <td>{protein}</td>

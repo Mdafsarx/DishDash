@@ -16,13 +16,13 @@ interface detailsData {
 }
 
 export default function Page() {
-    const shareUrl: string = 'https://example.com';
+    const shareUrl: string = 'https://dishdash-lake.vercel.app';
 
     const params = useParams();
     const { data } = useQuery({
         queryKey: ['details-data'],
         queryFn: async () => {
-            const res = await axios(`https://api.spoonacular.com/recipes/findByNutrients?minCarbs=10&maxCarbs=50&number=11&random=false&apiKey=14d82ed57ecd4f8cb6a505793be84d2b`)
+            const res = await axios(`https://api.spoonacular.com/recipes/findByNutrients?minCarbs=10&maxCarbs=50&number=11&random=false&apiKey=${process.env.API_KEY}`)
             const data = await res.data.filter((d: detailsData) => d?.id === Number(params?.id))
             return data[0]
         },
@@ -37,42 +37,31 @@ export default function Page() {
         toast.success('Item added to favorites!')
     }
 
-    // if (isLoading) return <div className="flex items-center justify-center min-h-[calc(100vh-80px)]">
-    //     <div className="cube">
-    //         <div className="cube_item cube_x"></div>
-    //         <div className="cube_item cube_y"></div>
-    //         <div className="cube_item cube_y"></div>
-    //         <div className="cube_item cube_x"></div>
-    //     </div>
-    // </div>
-
-
     return (
         <div>
             {/* title */}
             <div className="p-6 bg-[#00A14966] text-center">
-                <h1 className="uppercase text-2xl font-black text-white">Planner Details</h1>
+                <h1 className="uppercase text-xl md:text-2xl font-black text-white">Planner Details</h1>
             </div>
 
-            <div className="max-w-7xl mx-auto">
+            <div className="max-w-7xl mx-auto px-4 xl:px-0">
                 {/* img and details info */}
-                <div className="mt-14">
-
-                    <div className="flex gap-x-8">
+                <div className="mt-6 md:mt-14">
+                    <div className="flex flex-col md:flex-row gap-x-8">
                         {/* image */}
-                        <figure className="w-1/2">
+                        <figure className="md:w-1/2">
                             <img className="rounded-2xl w-full" src={data?.image} alt="" />
                         </figure>
                         {/* details */}
-                        <div className="w-1/2">
-                            <h1 title={data?.title} className="text-3xl font-bold">
+                        <div className="md:w-1/2">
+                            <h1 title={data?.title} className="text-xl md:text-3xl font-bold">
                                 {data?.title?.split(' ').slice(0, 3).join(' ')}...</h1>
                             {/* rating and cuisine name */}
                             <div className="flex items-center justify-between border-b py-[1.15rem]">
                                 <p><span className="bg-[#00A149] rounded-full p-2 text-white">{data?.protein} protein</span></p>
                                 <Rating name="read-only" value={5} readOnly />
                             </div>
-                            <p className="py-[1.15rem] border-b">
+                            <p className="py-[1.15rem] border-b text-balance hidden xl:block">
                                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam dolores iste rem, aspernatur nam animi. Deserunt totam dolores in vitae voluptas quibusdam voluptatum cumque, quam facilis. Aperiam hic autem eveniet.
                             </p>
                             <div className="space-y-2 border-b py-[1.15rem]">
@@ -107,9 +96,9 @@ export default function Page() {
                 </div>
 
                 {/* descriptions */}
-                <div className="flex gap-6 my-20">
+                <div className="flex flex-col md:flex-row gap-6 my-20">
 
-                    <div className="w-[70%] h-96 space-y-2.5">
+                    <div className="md:w-[70%] space-y-2.5">
                         {/* description */}
                         <div className="space-y-2.5">
                             <h1 className="text-2xl font-">Description</h1>
@@ -128,7 +117,7 @@ export default function Page() {
 
                     </div>
 
-                    <div className="w-[30%] bg-[#00A14966] rounded-2xl p-6 space-y-2.5">
+                    <div className="md:w-[30%] bg-[#00A14966] rounded-2xl p-6 space-y-2.5">
                         <h1 className="text-2xl border-b border-white pb-2">Ingredients</h1>
                         <ul className="list-disc pl-4 space-y-2.5 border-b border-white pb-2">
                             <li>Chicken</li>

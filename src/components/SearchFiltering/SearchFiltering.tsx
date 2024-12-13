@@ -34,7 +34,7 @@ export default function SearchFiltering() {
         queryKey: ['data'],
         queryFn: async () => {
             const res = await axios(`https://api.spoonacular.com/recipes/findByNutrients?minCarbs=10&maxCarbs=50&number=11&random=false&apiKey=${process.env.API_KEY}`)
-            const data = await res.data.slice(1)
+            const data = await res.data.slice(2)
             setRecipeData(data)
             setRecipeData2(data)
         }
@@ -74,20 +74,20 @@ export default function SearchFiltering() {
 
 
     return (
-        <div className="max-w-7xl mx-auto py-20">
+        <div className="max-w-7xl mx-auto py-20 px-4 md:px-10 xl:px-0">
             {/* title */}
             <div className="text-center mb-10">
-                <h1 className="text-3xl font-bold">Discover Delicious Recipes</h1>
-                <p>Plan your meals, find recipes, cook with ease, and enjoy healthy living every <br /> day with personalized recommendations and smart meal planning tools.</p>
+                <h1 className="text-xl md:text-3xl font-bold">Discover Delicious Recipes</h1>
+                <p className="text-balance">Plan your meals, find recipes, cook with ease, and enjoy healthy living every <br /> day with personalized recommendations and smart meal planning tools.</p>
             </div>
 
             {/* search filter and card */}
-            <div className="flex gap-10">
+            <div className="flex flex-col xl:flex-row gap-10">
                 {/* search and filter */}
-                <div className="w-[25%] h-96 ">
+                <div className="block md:hidden xl:block xl:w-[25%]">
                     <h3 className="font-bold text-lg mb-4">Filters Option</h3>
                     <div className="space-y-4">
-                        <label className="input input-bordered flex items-center gap-2">
+                        <label className="input input-bordered flex items-center gap-2 max-w-full xl:max-w-xs">
                             <input type="text" onChange={(e) => setSearch(e.target.value)} className="grow" placeholder="Recipe name" />
                             <svg onClick={handleSearch}
                                 xmlns="http://www.w3.org/2000/svg"
@@ -101,28 +101,28 @@ export default function SearchFiltering() {
                             </svg>
                         </label>
 
-                        <select onChange={handleProtein} className="select select-bordered w-full max-w-xs">
+                        <select onChange={handleProtein} className="select select-bordered w-full max-w-full xl:max-w-xs">
                             <option disabled selected>Protein</option>
                             {
                                 protein?.map((p, i) => <option key={i}>{p}g</option>)
                             }
                         </select>
 
-                        <select onChange={handleCalories} className="select select-bordered w-full max-w-xs">
+                        <select onChange={handleCalories} className="select select-bordered w-full max-w-full xl:max-w-xs">
                             <option disabled selected>Calories</option>
                             {
                                 calories?.map((c, i) => <option key={i}>{c}</option>)
                             }
                         </select>
 
-                        <select onChange={handleCarbs} className="select select-bordered w-full max-w-xs">
+                        <select onChange={handleCarbs} className="select select-bordered w-full max-w-full xl:max-w-xs">
                             <option disabled selected>carbs</option>
                             {
                                 carbs?.map((c, i) => <option key={i}>{c}g</option>)
                             }
                         </select>
 
-                        <select onChange={handleFat} className="select select-bordered w-full max-w-xs">
+                        <select onChange={handleFat} className="select select-bordered w-full max-w-full xl:max-w-xs">
                             <option disabled selected>fat</option>
                             {
                                 fat?.map((f, i) => <option key={i}>{f}g</option>)
@@ -131,7 +131,7 @@ export default function SearchFiltering() {
                     </div>
                 </div>
                 {/* items */}
-                <div className="w-[75%] h-96">
+                <div className="xl:w-[75%]">
                     <h3 className="font-bold text-lg mb-4">Items</h3>
                     {
                         isLoading
@@ -143,7 +143,7 @@ export default function SearchFiltering() {
                                     <div className="cube_item cube_x"></div>
                                 </div>
                             </div>
-                            : <div className="grid grid-cols-2 gap-x-6 gap-y-11">
+                            : <div className="grid md:grid-cols-2 gap-x-6 gap-y-11">
                                 {
                                     displayedData?.map((recipe: Recipe, i: number) => <Card key={i}
                                         title={recipe.title?.split(' ').slice(0, 3).join(' ')}
@@ -157,7 +157,7 @@ export default function SearchFiltering() {
             </div>
 
             {/* pagination */}
-            <div className="flex justify-end">
+            <div className="flex justify-end mt-4 xl:mt-0">
                 <div className="space-x-4">
                     <button
                         onClick={() => {

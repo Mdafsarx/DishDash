@@ -8,7 +8,7 @@ export default function Banner() {
       {/* content */}
       <div className='flex items-center justify-center rounded-2xl bg-gradient-to-tl from-[#000000CC] to-[#00000099]  min-h-[calc(100vh-100px)] w-full'>
         <div className='text-center space-y-4 p-10'>
-          <h3 className='text-2xl font-medium text-[#00A149]'>
+          <h3 className='text-xl md:text-2xl font-medium text-[#00A149]'>
             <Typewriter
               words={['Delicious Recipes', 'Healthy Meals', 'Quick Snacks', 'Tasty Desserts', 'Fresh Ingredients', 'Flavorful Dishes']}
               loop={Infinity}
@@ -19,9 +19,9 @@ export default function Banner() {
               delaySpeed={1500}
             />
           </h3>
-          <h1 className='text-5xl font- text-white'>Savor the Taste of Fresh <br /> Homemade Goodness.</h1>
-          <p className='bg-gradient-to-r from-[#3cda83] to-[#fa2222] bg-clip-text text-transparent'>Nourishing Your Body and Pleasing Your Senses <br /> with Wholesome, Flavorful Meals</p>
-          <button className='btn bg-[#D1212166] border-[#D12121] text-[#f83333] border-2 hover:bg-[#D1212199] hover:border-[#D12121]'>Browse Menu</button>
+          <h1 className='text-2xl md:text-5xl font- text-white'>Savor the Taste of Fresh <br /> Homemade Goodness.</h1>
+          <p className='bg-gradient-to-r from-[#3cda83] to-[#fa2222] bg-clip-text text-transparent text-balance'>Nourishing Your Body and Pleasing Your Senses <br /> with Wholesome, Flavorful Meals</p>
+          <button className='btn btn-sm md:btn-md bg-[#D1212166] border-[#D12121] text-[#f83333] border-2 hover:bg-[#D1212199] hover:border-[#D12121]'>Browse Menu</button>
         </div>
       </div>
     </div>
